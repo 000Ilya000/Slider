@@ -35,7 +35,7 @@ const Slider = ({ children }) => {
 };
 const MainContainer = styled.div`
     height: 150px;
-    width: ${PageWidth}px;
+    width: 564px;
     display: flex;
     align-items: center;
     position: relative;
@@ -49,6 +49,7 @@ const PagesContainer = styled.div`
     height: 100%;
     display: flex;
     transition: transform 300ms ease-in-out;
+    gap: 40px;
 `;
 const Arrow = styled.div`
     height: 40px;
@@ -56,6 +57,6 @@ const Arrow = styled.div`
     width: 40px;
     background: url(${(props) => (props.direction === 'left' ? left : right)});
     position: absolute;
-    ${(props) => (props.direction === 'left' ? 'left: -60px;' : 'right: -60px; left: auto;')}
+    ${(props) => (props.direction === 'left' ? 'left: -60px; bottom: -60px;' : 'right: -60px; left: auto; bottom: -60px;')}
 `;
 export default Slider;
