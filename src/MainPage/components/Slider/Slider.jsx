@@ -2,13 +2,20 @@ import React, { useState, useEffect, Children, cloneElement } from 'react';
 import styled from 'styled-components';
 import leftArrow from '../../imgs/Left.png';
 import rightArrow from '../../imgs/Right.png';
-const PageWidth = 450;
+const PageWidth = 400;
 const Slider = ({ children }) => {
     const [pages, setPages] = useState([]);
     const [offset, setOffset] = useState(0);
-    const handleOffsetChange = (newOffset) => {
-        const maxOffset = -(PageWidth * (pages.length - 1));
-        setOffset(Math.max(Math.min(newOffset, 0), maxOffset));
+
+    const handleLeftOffsetChange = () => {
+        const newOffset = offset + PageWidth
+        setOffset(Math.min(newOffset, 0))
+    };
+
+    const handleRightOffsetChange = () => {
+        const newOffset = offset - PageWidth
+        const maxOffset = -(PageWidth * (pages.length - (window.innerWidth / PageWidth - 1.4)))
+        setOffset(Math.max(newOffset, maxOffset))
     };
     useEffect(() => {
         setPages(
@@ -26,8 +33,8 @@ const Slider = ({ children }) => {
     return (
         <MainContainer>
             <Arrows>
-                <Arrow onClick={() => handleOffsetChange(offset + PageWidth)} direction="left" />
-                <Arrow onClick={() => handleOffsetChange(offset - PageWidth)} direction="right" />
+                <Arrow onClick={handleLeftOffsetChange} direction="left" />
+                <Arrow onClick={handleRightOffsetChange} direction="right" />
             </Arrows>
             <Window>
                 <PagesContainer style={{ transform: `translateX(${offset}px)` }}>{pages}</PagesContainer>
