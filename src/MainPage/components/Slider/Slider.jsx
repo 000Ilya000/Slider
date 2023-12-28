@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Children, cloneElement } from 'react';
 import styled from 'styled-components';
-import left from '../../imgs/Left.png';
-import right from '../../imgs/Right.png';
+import leftArrow from '../../imgs/Left.png';
+import rightArrow from '../../imgs/Right.png';
 const PageWidth = 450;
 const Slider = ({ children }) => {
     const [pages, setPages] = useState([]);
@@ -16,8 +16,8 @@ const Slider = ({ children }) => {
                 cloneElement(child, {
                     style: {
                         height: '100%',
-                        minWidth: `${PageWidth}px`,
-                        maxWidth: `${PageWidth}px`,
+                        // minWidth: `${PageWidth}px`,
+                        // maxWidth: `${PageWidth}px`,
                     },
                 })
             )
@@ -25,38 +25,45 @@ const Slider = ({ children }) => {
     }, [children]);
     return (
         <MainContainer>
-            <Arrow onClick={() => handleOffsetChange(offset + PageWidth)} direction="left" />
+            <Arrows>
+                <Arrow onClick={() => handleOffsetChange(offset + PageWidth)} direction="left" />
+                <Arrow onClick={() => handleOffsetChange(offset - PageWidth)} direction="right" />
+            </Arrows>
             <Window>
                 <PagesContainer style={{ transform: `translateX(${offset}px)` }}>{pages}</PagesContainer>
             </Window>
-            <Arrow onClick={() => handleOffsetChange(offset - PageWidth)} direction="right" />
         </MainContainer>
     );
 };
 const MainContainer = styled.div`
-    height: 150px;
-    width: 564px;
-    display: flex;
-    align-items: center;
-    position: relative;
+  height: 402px;
+  width: -webkit-fill-available;
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
+const Arrows = styled.div`
+  display: flex;
+  gap: 16px;
+  position: absolute;
+  top: -181px;
+  right: 120px;
 `;
 const Window = styled.div`
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 `;
 const PagesContainer = styled.div`
-    height: 100%;
-    display: flex;
-    transition: transform 300ms ease-in-out;
-    gap: 40px;
+  height: 100%;
+  display: flex;
+  transition: transform 300ms ease-in-out;
+  gap: 40px;
 `;
 const Arrow = styled.div`
-    height: 40px;
-    cursor: pointer;
-    width: 40px;
-    background: url(${(props) => (props.direction === 'left' ? left : right)});
-    position: absolute;
-    ${(props) => (props.direction === 'left' ? 'left: -60px; bottom: -60px;' : 'right: -60px; left: auto; bottom: -60px;')}
+  height: 40px;
+  cursor: pointer;
+  width: 40px;
+  background: url(${(props) => (props.direction === 'left' ? leftArrow : rightArrow)});
 `;
 export default Slider;
